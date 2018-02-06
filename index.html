@@ -13,6 +13,7 @@
     <link rel="alternate" type="application/rss+xml" href="{RSS}"/>
     <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
     {block:Hidden}
+      <meta name="if:ShowDescription" content="1"/>
       <meta name="color:Background" content="#ffffff">
       <meta name="color:Text" content="#000000">
       <meta name="color:AccentOne" content="#000000">
@@ -132,7 +133,6 @@
             top: 0;
             left: 0;
             width: var(--sidebar-width);
-            height: 100%;
             padding: 2vw;
           }
         }
@@ -163,12 +163,10 @@
         }
 
       .blog-description {
-        font-size: 1.25rem;
       }
         @media (min-width: 768px) and (orientation: landscape) {
           .blog-description {
             display: block;
-            padding: 1rem 1rem 1rem var(--sidebar-width);
           }
         }
 
@@ -187,11 +185,11 @@
       .post {}
         @media (min-width: 768px) and (orientation: landscape) {
           .post {
+            padding-top: 1rem;
           }
         }
         .post h2 {
-          font-family: var(--font-face-mono-alt);
-          font-size: 1.25rem;
+          font-size: 1rem;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           margin-top: 1rem;
@@ -199,10 +197,16 @@
         .post p {
           margin: 0.8rem 0;
           line-height: 1.5;
+          max-width: 50em;
         }
         .post-meta {
           text-transform: uppercase;
         }
+          .post-meta li {
+            list-style: none;
+            display: inline-block;
+            margin-right: 0.75em;
+          }
           .post-meta a {
             font-size: 0.9rem;
             font-weight: 700;
@@ -212,6 +216,9 @@
           .post-meta a:hover {
             color: var(--accent-color-2);
           }
+      .read_more_container {
+        display: none;
+      }
 
     </style>
 
@@ -227,6 +234,9 @@
       <a href="/">
         <h1 class="blog-title">{Title}</h1>
       </a>
+      {block:ShowDescription}
+        <p class="blog-description">{Description}</section>
+      {/block:ShowDescription}
 
       {block:HasPages}
         {block:Pages}
@@ -253,10 +263,6 @@
       {block:IfCustomLink3URL}<li><a href="{text:Custom Link 3 URL}">{text:Custom Link 3 Name}</a></li>{/block:IfCustomLink3URL}
       {block:IfCustomLink4URL}<li><a href="{text:Custom Link 4 URL}">{text:Custom Link 4 Name}</a></li>{/block:IfCustomLink4URL}
     </nav>
-
-    {block:IndexPage}{block:Description}
-      <section class="blog-description">{Description}</section>
-    {/block:Description}{/block:IndexPage}
     
     <div class="post-area {block:IndexPage}grid{/block:IndexPage}">
 
@@ -286,27 +292,28 @@
           <aside class="post-meta">
             {block:HasTags}
               {block:Tags}
-                <li class="tag-{Tag}">
-                  <a href="{TagURL}">{Tag}</a>
+                <li>
+                  <a href="{TagURL}">#{Tag}</a>
                 </li>
               {/block:Tags}
             {/block:HasTags}
             
-            <li class="post-note-count"><a href="{Permalink}" data-id="{PostID}" class="meta-notes open-modal">
-              {NoteCount} {text:Translate Notes Text}
-            </a></li>
+            {block:PermalinkPage}
+              <li class="post-note-count"><a href="{Permalink}" data-id="{PostID}" class="meta-notes">
+                {NoteCount} Notes
+              </a></li>
+            {/block:PermalinkPage}
           </aside>
 
         </section>
       {/block:Posts}
 
       {block:Answer}
-        <article id="ant-{PostID}" class="{block:IndexPage} ants-item-{select:Posts Columns} post post-answer {block:Tags}{Tag} {/block:Tags}{/block:IndexPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="answer">
+        <article id="ant-{PostID}" class="{block:IndexPage} post post-answer {block:Tags}{Tag} {/block:Tags}{/block:IndexPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="answer">
         <input id="post-notes-url" type="hidden" value="{PostNotesURL}">
         <div class="inside">
-          <div class="content">
           <div class="asker-box">
-              <img src="{AskerPortraitURL-24}"/><span class="the-asker">{Asker}</span> {text:Translate asked Text}: {Question}
+              <img src="{AskerPortraitURL-24}"/><span class="the-asker">{Asker}</span> asked: {Question}
           </div>
           <div class="answer">
               {Answer}
@@ -317,10 +324,10 @@
 
       {block:Pagination}
         <div class="standard-pagination">
-            <div class="wrapper"> 
-                {block:PreviousPage}<a class="left" href="{PreviousPage}"><i class="fa fa-long-arrow-left"></i> Newer</a>{/block:PreviousPage}
-                {block:NextPage}<a class="right older" href="{NextPage}">Older <i class="fa fa-long-arrow-right"></i></a>{/block:NextPage}
-            </div>
+          <div class="wrapper"> 
+            {block:PreviousPage}<a class="left" href="{PreviousPage}">← Newer</a>{/block:PreviousPage}
+            {block:NextPage}<a class="right older" href="{NextPage}">Older →</i></a>{/block:NextPage}
+          </div>
         </div>
       {/block:Pagination}
 
