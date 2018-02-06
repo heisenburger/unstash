@@ -11,6 +11,14 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
     <style type="text/css">
+
+    :root{
+       --font-size: 16px;
+       --text-color: black;
+       --background-color: white;
+       --sidebar-width: 12rem;
+       --post-width: 20rem;
+    }
       
       /* Reset */
 
@@ -40,27 +48,16 @@
 
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Ubuntu", "Segoe UI", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-        font-size: 16px;
+        font-size: var(--font-size);
         font-weight: 400;
         line-height: 1.25;
-        color: $text-color;
-        background-color: $background-color;
+        color: var(--text-color);
+        background-color: var(--background-color);
         -webkit-text-size-adjust: 100%;
         font-feature-settings: "kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0;
         font-kerning: normal;
         text-rendering: optimizeLegibility;
-        padding: 0 10px;
-      }
-
-      @media screen and (min-width: 768px) {
-        body {
-          padding: 0 5vw;
-        }
-      }
-      @media screen and (min-width: 1024px) {
-        body {
-          padding: 0 2vw;
-        }
+        padding: 0 1rem;
       }
 
       h1, h2, h3, h4, h5, h6,
@@ -84,6 +81,63 @@
         text-align: center;
       }
 
+      /* Layout */
+
+      .grid {
+        display: grid;
+        justify-content: space-between; 
+      }
+
+      .grid-child {
+        width: 100%;
+      }
+
+      .blog-sidebar {
+        padding: 1rem 0;
+      }
+        @media (min-width: 768px) and (orientation: landscape) {
+          .blog-sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100%;
+            padding: 1rem;
+          }
+        }
+        .blog-sidebar a {
+          display: inline-block;
+        }
+          @media (min-width: 768px) and (orientation: landscape) {
+            .blog-sidebar a {
+              display: block;
+            }
+          }
+
+      .blog-description {}
+        @media (min-width: 768px) and (orientation: landscape) {
+          .blog-description {
+            display: block;
+            padding: 1rem 1rem 1rem var(--sidebar-width);
+          }
+        }
+
+      .post-area {}
+        @media (min-width: 768px) and (orientation: landscape) {
+          .post-area {
+            width: 100%;
+            padding-left: var(--sidebar-width);
+            grid-template-columns: repeat(auto-fill, minmax(var(--post-width), 1fr));
+            grid-gap: 1rem;
+          }
+        }
+
+      .post {}
+        @media (min-width: 768px) and (orientation: landscape) {
+          .post {
+          }
+        }
+
     </style>
 
   </head>
@@ -97,11 +151,63 @@
       <a href="">link 3</a>
     </nav>
 
-    <div class="post-area">
+    <section class="blog-description">This is a description</section>
 
-      <section class="blog-description">This is a description</section>
+    <div class="post-area grid">
 
-      <section class="post">
+      <section class="post grid-child">
+        <article class="post-body">
+          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
+          <h2>Post title</h2>
+          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
+        </article>
+        <aside class="post-meta">
+          <a href="">tags</a>
+          <a href="">tags</a>
+          <a href="">tags</a>
+        </aside>
+      </section>
+
+      <section class="post grid-child">
+        <article class="post-body">
+          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
+          <h2>Post title</h2>
+          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
+        </article>
+        <aside class="post-meta">
+          <a href="">tags</a>
+          <a href="">tags</a>
+          <a href="">tags</a>
+        </aside>
+      </section>
+
+      <section class="post grid-child">
+        <article class="post-body">
+          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
+          <h2>Post title</h2>
+          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
+        </article>
+        <aside class="post-meta">
+          <a href="">tags</a>
+          <a href="">tags</a>
+          <a href="">tags</a>
+        </aside>
+      </section>
+
+      <section class="post grid-child">
+        <article class="post-body">
+          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
+          <h2>Post title</h2>
+          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
+        </article>
+        <aside class="post-meta">
+          <a href="">tags</a>
+          <a href="">tags</a>
+          <a href="">tags</a>
+        </aside>
+      </section>
+
+      <section class="post grid-child">
         <article class="post-body">
           <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
           <h2>Post title</h2>
