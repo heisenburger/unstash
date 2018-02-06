@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{Title}{block:PostSummary} - {PostSummary}{/block:PostSummary}</title>
+    <meta name="description" content="{block:Description}{MetaDescription}{/block:Description}"/>
+    {MobileAppHeaders}
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <style type="text/css">
+      
+      /* Reset */
+
+      * {
+        box-sizing: border-box;
+        &:focus {
+          outline: 0.5rem solid pink;
+          transition: 50ms;
+        }
+      }
+
+      body, h1, h2, h3, h4, h5, h6,
+      p, blockquote, pre, hr,
+      dl, dd, ol, ul, figure {
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body {
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Base */
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Ubuntu", "Segoe UI", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.25;
+        color: $text-color;
+        background-color: $background-color;
+        -webkit-text-size-adjust: 100%;
+        font-feature-settings: "kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0;
+        font-kerning: normal;
+        text-rendering: optimizeLegibility;
+        padding: 0 10px;
+      }
+
+      @media screen and (min-width: 768px) {
+        body {
+          padding: 0 5vw;
+        }
+      }
+      @media screen and (min-width: 1024px) {
+        body {
+          padding: 0 2vw;
+        }
+      }
+
+      h1, h2, h3, h4, h5, h6,
+      p, blockquote, pre,
+      ul, ol, dl, figure,
+      %vertical-rhythm {
+        margin-bottom: 1rem;
+      }
+
+      img {
+        max-width: 100%;
+        vertical-align: middle;
+      }
+
+      figure > img {
+        display: block;
+      }
+
+      figcaption {
+        font-size: 0.875em;
+        text-align: center;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <nav class="blog-sidebar">
+      <h1 class="blog-title">BLOG TITLE</h1>
+      <a href="">link 1</a>
+      <a href="">link 2</a>
+      <a href="">link 3</a>
+    </nav>
+
+    <div class="post-area">
+
+      <section class="blog-description">This is a description</section>
+
+      <section class="post">
+        <article class="post-body">
+          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
+          <h2>Post title</h2>
+          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
+        </article>
+        <aside class="post-meta">
+          <a href="">tags</a>
+          <a href="">tags</a>
+          <a href="">tags</a>
+        </aside>
+      </section>
+
+    </div>
+
+  </body>
+
+</html>
