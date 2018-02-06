@@ -9,7 +9,32 @@
     <meta name="description" content="{block:Description}{MetaDescription}{/block:Description}"/>
     {MobileAppHeaders}
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <link rel="shortcut icon" href="{Favicon}"/>
+    <link rel="alternate" type="application/rss+xml" href="{RSS}"/>
     <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+    {block:Hidden}
+      <meta name="color:Background" content="#ffffff">
+      <meta name="color:Text" content="#000000">
+      <meta name="color:AccentOne" content="#000000">
+      <meta name="color:AccentTwo" content="#000000">
+      <meta name="if:Random Link" content="0"/>    
+      <meta name="if:Archive Link" content="0"/>    
+      <meta name="if:RSS Link" content="0"/> 
+      <meta name="if:High Quality Images" content="1"/>
+      <meta name="text:Ask Link Label" content="Ask">
+      <meta name="text:Submit Link Label" content="Submit">
+      <meta name="text:Archive Link Label" content="Archive">
+      <meta name="text:Random Link Label" content="Random">
+      <meta name="text:Custom Link 1 URL" content=""/>
+      <meta name="text:Custom Link 1 Name" content=""/>
+      <meta name="text:Custom Link 2 URL" content=""/>
+      <meta name="text:Custom Link 2 Name" content=""/>
+      <meta name="text:Custom Link 3 URL" content=""/>
+      <meta name="text:Custom Link 3 Name" content=""/>
+      <meta name="text:Custom Link 4 URL" content=""/>
+      <meta name="text:Custom Link 4 Name" content=""/>
+    {/block:Hidden}
+
     <style type="text/css">
 
     :root{
@@ -18,12 +43,12 @@
       --font-face-mono: 'Cutive Mono', 'PT Mono', 'Inconsolata', Monaco, monospace;
       --font-face-mono-alt: 'Inconsolata', Monaco, monospace;
       --font-size: 16px;
-      --text-color: black;
-      --background-color: white;
-      --accent-color-1: pink;
-      --accent-color-2: red;
+      --text-color: {color:Text};
+      --background-color: {color:Background};
+      --accent-color-1: {color:AccentOne};
+      --accent-color-2: {color:AccentTwo};
       --sidebar-width: 12rem;
-      --post-width: 20rem;
+      --post-width: 25rem;
     }
       
       /* Reset */
@@ -118,6 +143,9 @@
           text-transform: uppercase;
           margin: 1rem 0;
         }
+        .blog-sidebar li {
+          list-style: none;
+        }
         .blog-sidebar a {
           display: inline-block;
           padding-right: 1rem;
@@ -134,7 +162,9 @@
           color: var(--accent-color-2);
         }
 
-      .blog-description {}
+      .blog-description {
+        font-size: 1.25rem;
+      }
         @media (min-width: 768px) and (orientation: landscape) {
           .blog-description {
             display: block;
@@ -190,80 +220,109 @@
   <body>
 
     <nav class="blog-sidebar">
-      <h1 class="blog-title">The consumption diary of</h1>
-      <a href="">link 1</a>
-      <a href="">link 2</a>
-      <a href="">link 3</a>
+
+      {block:iflogoimage}
+        <a href="/"><img src="{image:Logo}" alt="logo" style="padding: 1rem 2rem;" /></a>
+      {/block:iflogoimage}
+      <a href="/">
+        <h1 class="blog-title">{Title}</h1>
+      </a>
+
+      {block:HasPages}
+        {block:Pages}
+          <li><a href="{URL}">{Label}</a></li>
+        {/block:Pages}
+      {/block:HasPages}
+      {block:AskEnabled}
+        <li><a href="http://{name}.tumblr.com/ask" title="{text:Ask Link Label}">{text:Ask Link Label}</a></li>
+      {/block:AskEnabled}
+      {block:SubmissionsEnabled}
+        <li><a href="http://{name}.tumblr.com/submit" title="{text:Submit Link Label}">{text:Submit Link Label}</a></li>
+      {/block:SubmissionsEnabled}
+      {block:IfArchiveLink}
+        <li><a href="http://{name}.tumblr.com/archive" title="{text:Archive Link Label}">{text:Archive Link Label}</a></li>
+      {/block:IfArchiveLink}
+      {block:ifRandomLink}
+        <li><a href="http://{name}.tumblr.com/random" title="{text:Random Link Label}">{text:Random Link Label}</a></li>
+      {/block:ifRandomLink}
+      {block:ifRSSLink}
+        <li><a href="{RSS}" title="{lang:RSS}">{lang:RSS}</a></li>
+      {/block:ifRSSLink}
+      {block:IfCustomLink1URL}<li><a href="{text:Custom Link 1 URL}">{text:Custom Link 1 Name}</a></li>{/block:IfCustomLink1URL}
+      {block:IfCustomLink2URL}<li><a href="{text:Custom Link 2 URL}">{text:Custom Link 2 Name}</a></li>{/block:IfCustomLink2URL}
+      {block:IfCustomLink3URL}<li><a href="{text:Custom Link 3 URL}">{text:Custom Link 3 Name}</a></li>{/block:IfCustomLink3URL}
+      {block:IfCustomLink4URL}<li><a href="{text:Custom Link 4 URL}">{text:Custom Link 4 Name}</a></li>{/block:IfCustomLink4URL}
     </nav>
 
-    <section class="blog-description">This is a description</section>
+    {block:IndexPage}{block:Description}
+      <section class="blog-description">{Description}</section>
+    {/block:Description}{/block:IndexPage}
+    
+    <div class="post-area {block:IndexPage}grid{/block:IndexPage}">
 
-    <div class="post-area grid">
+      {block:Posts}
+        <section class="post {block:IndexPage}grid-child{/block:IndexPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="photo">
+          <article class="post-body">
+            {block:IndexPage}
+              <a href="{Permalink}" data-id="{PostID}">
+            {/block:IndexPage}
+              <img src="{block:IfHighQualityImages}{PhotoURL-HighRes}{/block:IfHighQualityImages}{block:IfNotHighQualityImages}{PhotoURL-500}{/block:IfNotHighQualityImages}" data-img-hq="{PhotoURL-HighRes}" alt="{PhotoAlt}" />
+              {block:IndexPage}
+                {block:Title}
+                  <h2 class="post-title"><a href="{Permalink}" data-id="{PostID}">{Title}</a></h2>
+                {/block:Title}
+              {/block:IndexPage}
+              {block:PermalinkPage}
+                {block:Title}<h2 class="post-title">{Title}</h2>{/block:Title}
+              {/block:PermalinkPage}
+            {block:IndexPage}
+              </a>
+            {/block:IndexPage}
+            
+            {block:Caption}{Caption}{/block:Caption}
 
-      <section class="post grid-child">
-        <article class="post-body">
-          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
-          <h2>Post title</h2>
-          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
-        </article>
-        <aside class="post-meta">
-          <a href="">tags</a>
-          <a href="">tags</a>
-          <a href="">tags</a>
-        </aside>
-      </section>
+          </article>
 
-      <section class="post grid-child">
-        <article class="post-body">
-          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
-          <h2>Post title</h2>
-          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
-        </article>
-        <aside class="post-meta">
-          <a href="">tags</a>
-          <a href="">tags</a>
-          <a href="">tags</a>
-        </aside>
-      </section>
+          <aside class="post-meta">
+            {block:HasTags}
+              {block:Tags}
+                <li class="tag-{Tag}">
+                  <a href="{TagURL}">{Tag}</a>
+                </li>
+              {/block:Tags}
+            {/block:HasTags}
+            
+            <li class="post-note-count"><a href="{Permalink}" data-id="{PostID}" class="meta-notes open-modal">
+              {NoteCount} {text:Translate Notes Text}
+            </a></li>
+          </aside>
 
-      <section class="post grid-child">
-        <article class="post-body">
-          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
-          <h2>Post title</h2>
-          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
-        </article>
-        <aside class="post-meta">
-          <a href="">tags</a>
-          <a href="">tags</a>
-          <a href="">tags</a>
-        </aside>
-      </section>
+        </section>
+      {/block:Posts}
 
-      <section class="post grid-child">
-        <article class="post-body">
-          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
-          <h2>Post title</h2>
-          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
-        </article>
-        <aside class="post-meta">
-          <a href="">tags</a>
-          <a href="">tags</a>
-          <a href="">tags</a>
-        </aside>
-      </section>
+      {block:Answer}
+        <article id="ant-{PostID}" class="{block:IndexPage} ants-item-{select:Posts Columns} post post-answer {block:Tags}{Tag} {/block:Tags}{/block:IndexPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="answer">
+        <input id="post-notes-url" type="hidden" value="{PostNotesURL}">
+        <div class="inside">
+          <div class="content">
+          <div class="asker-box">
+              <img src="{AskerPortraitURL-24}"/><span class="the-asker">{Asker}</span> {text:Translate asked Text}: {Question}
+          </div>
+          <div class="answer">
+              {Answer}
+          </div>
+        </div>
+      {/block:Answer}
 
-      <section class="post grid-child">
-        <article class="post-body">
-          <img src="https://68.media.tumblr.com/037f8dd28b695fa8806d977529be4146/tumblr_p3pqw8FKBk1x536yeo1_1280.jpg" class="post-img">
-          <h2>Post title</h2>
-          <p>Post body Post body Post body Post body Post body Post body Post body Post body</p>
-        </article>
-        <aside class="post-meta">
-          <a href="">tags</a>
-          <a href="">tags</a>
-          <a href="">tags</a>
-        </aside>
-      </section>
+
+      {block:Pagination}
+        <div class="standard-pagination">
+            <div class="wrapper"> 
+                {block:PreviousPage}<a class="left" href="{PreviousPage}"><i class="fa fa-long-arrow-left"></i> Newer</a>{/block:PreviousPage}
+                {block:NextPage}<a class="right older" href="{NextPage}">Older <i class="fa fa-long-arrow-right"></i></a>{/block:NextPage}
+            </div>
+        </div>
+      {/block:Pagination}
 
     </div>
 
