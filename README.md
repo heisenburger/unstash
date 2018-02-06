@@ -29,9 +29,11 @@ i'm planning on making it more flexible but you should feel free to go into cust
 ```
 
 ### todo
-- [ ] allow font family selection
+- [ ] support custom pages
+- [x] allow font family selection
 - [ ] custom toggle showing photo captions, titles and tags on index page
 - [ ] research how to make css grid rows break naturally whilst keeping columns (might end up needing flexbox, hmm)
 - [ ] typography still needs work
 - [ ] support other post types
-
+- [ ] search support
+- [ ] like and reblog support

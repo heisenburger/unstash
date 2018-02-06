@@ -11,13 +11,15 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <link rel="shortcut icon" href="{Favicon}"/>
     <link rel="alternate" type="application/rss+xml" href="{RSS}"/>
-    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+
     {block:Hidden}
-      <meta name="if:ShowDescription" content="1"/>
-      <meta name="color:Background" content="#ffffff">
+      <meta name="select:Font style" content="font-face-sans" title="Sans serif">
+        <meta name="select:Font style" content="font-face-serif" title="Serif">
+        <meta name="select:Font style" content="font-face-mono" title="Monospace">
+      <meta name="color:Background" content="{BackgroundColor}">
       <meta name="color:Text" content="#000000">
-      <meta name="color:AccentOne" content="#000000">
-      <meta name="color:AccentTwo" content="#000000">
+      <meta name="color:Accent One" content="#000000">
+      <meta name="color:Accent Two" content="{AccentColor}">
       <meta name="if:Random Link" content="0"/>    
       <meta name="if:Archive Link" content="0"/>    
       <meta name="if:RSS Link" content="0"/> 
@@ -41,13 +43,12 @@
     :root{
       --font-face-sans: -apple-system, BlinkMacSystemFont, "Roboto", "Ubuntu", "Segoe UI", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
       --font-face-serif: "Adobe Caslon Pro","Athelas","Goudy Old Style","Californian FB", Georgia, serif;
-      --font-face-mono: 'Cutive Mono', 'PT Mono', 'Inconsolata', Monaco, monospace;
-      --font-face-mono-alt: 'Inconsolata', Monaco, monospace;
+      --font-face-mono: 'PT Mono', 'Inconsolata', Monaco, monospace;
       --font-size: 16px;
       --text-color: {color:Text};
       --background-color: {color:Background};
-      --accent-color-1: {color:AccentOne};
-      --accent-color-2: {color:AccentTwo};
+      --accent-color-1: {color:Accent One};
+      --accent-color-2: {color:Accent Two};
       --sidebar-width: 12rem;
       --post-width: 25rem;
     }
@@ -79,7 +80,7 @@
       /* Base */
 
       body {
-        font-family: var(--font-face-mono);
+        font-family: var(--{select:Font style});
         font-size: var(--font-size);
         font-weight: 400;
         line-height: 1.25;
@@ -136,12 +137,17 @@
             padding: 2vw;
           }
         }
+        .blog-dp {
+          width: 100%; 
+          height: auto; 
+          padding-top: 1rem;
+        }
         .blog-sidebar h1 {
           font-size: 1rem;
           font-weight: 700;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          margin: 1rem 0;
+          margin-bottom: 1rem;
         }
         .blog-sidebar li {
           list-style: none;
@@ -190,6 +196,7 @@
         }
         .post h2 {
           font-size: 1rem;
+          font-weight: inherit;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           margin-top: 1rem;
@@ -200,7 +207,9 @@
           max-width: 50em;
         }
         .post-meta {
+          font-size: 0.875rem;
           text-transform: uppercase;
+          letter-spacing: 0.1em;
         }
           .post-meta li {
             list-style: none;
@@ -208,8 +217,6 @@
             margin-right: 0.75em;
           }
           .post-meta a {
-            font-size: 0.9rem;
-            font-weight: 700;
             text-decoration: none;
             color: var(--accent-color-1);
           }
@@ -220,6 +227,12 @@
         display: none;
       }
 
+      /* Display */
+
+      .circle {
+        clip-path: circle(38% at center);
+      }
+
     </style>
 
   </head>
@@ -228,9 +241,9 @@
 
     <nav class="blog-sidebar">
 
-      {block:iflogoimage}
-        <a href="/"><img src="{image:Logo}" alt="logo" style="padding: 1rem 2rem;" /></a>
-      {/block:iflogoimage}
+      {block:ShowAvatar} 
+        <a href="/"><img src="{PortraitURL-128}" alt="logo" class="blog-dp {AvatarShape}" /></a>
+      {block:ShowAvatar} 
       <a href="/">
         <h1 class="blog-title">{Title}</h1>
       </a>
@@ -238,11 +251,9 @@
         <p class="blog-description">{Description}</section>
       {/block:ShowDescription}
 
-      {block:HasPages}
-        {block:Pages}
-          <li><a href="{URL}">{Label}</a></li>
-        {/block:Pages}
-      {/block:HasPages}
+      {block:HasPages}{block:Pages}
+        <li><a href="{URL}">{Label}</a></li>
+      {/block:Pages}{/block:HasPages}
       {block:AskEnabled}
         <li><a href="http://{name}.tumblr.com/ask" title="{text:Ask Link Label}">{text:Ask Link Label}</a></li>
       {/block:AskEnabled}
@@ -281,12 +292,18 @@
               {block:PermalinkPage}
                 {block:Title}<h2 class="post-title">{Title}</h2>{/block:Title}
               {/block:PermalinkPage}
+              {block:TagPage}
+                <h2 class="post-title">Posts tagged "{Tag}"</h2>
+              {/block:TagPage}
             {block:IndexPage}
               </a>
             {/block:IndexPage}
             
             {block:Caption}{Caption}{/block:Caption}
-
+            
+            {block:NotReblog}
+              {Body}
+            {/block:NotReblog}
           </article>
 
           <aside class="post-meta">
