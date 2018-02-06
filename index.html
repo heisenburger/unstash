@@ -9,15 +9,21 @@
     <meta name="description" content="{block:Description}{MetaDescription}{/block:Description}"/>
     {MobileAppHeaders}
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
+    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
     <style type="text/css">
 
     :root{
-       --font-size: 16px;
-       --text-color: black;
-       --background-color: white;
-       --sidebar-width: 12rem;
-       --post-width: 20rem;
+      --font-face-sans: -apple-system, BlinkMacSystemFont, "Roboto", "Ubuntu", "Segoe UI", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      --font-face-serif: "Adobe Caslon Pro","Athelas","Goudy Old Style","Californian FB", Georgia, serif;
+      --font-face-mono: 'Cutive Mono', 'PT Mono', 'Inconsolata', Monaco, monospace;
+      --font-face-mono-alt: 'Inconsolata', Monaco, monospace;
+      --font-size: 16px;
+      --text-color: black;
+      --background-color: white;
+      --accent-color-1: pink;
+      --accent-color-2: red;
+      --sidebar-width: 12rem;
+      --post-width: 20rem;
     }
       
       /* Reset */
@@ -47,7 +53,7 @@
       /* Base */
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Ubuntu", "Segoe UI", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-family: var(--font-face-mono);
         font-size: var(--font-size);
         font-weight: 400;
         line-height: 1.25;
@@ -57,7 +63,7 @@
         font-feature-settings: "kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0;
         font-kerning: normal;
         text-rendering: optimizeLegibility;
-        padding: 0 1rem;
+        padding: 0 2vw;
       }
 
       h1, h2, h3, h4, h5, h6,
@@ -102,17 +108,31 @@
             left: 0;
             width: var(--sidebar-width);
             height: 100%;
-            padding: 1rem;
+            padding: 2vw;
           }
+        }
+        .blog-sidebar h1 {
+          font-size: 1rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin: 1rem 0;
         }
         .blog-sidebar a {
           display: inline-block;
+          padding-right: 1rem;
+          text-decoration: none;
+          color: var(--accent-color-1);
         }
           @media (min-width: 768px) and (orientation: landscape) {
             .blog-sidebar a {
               display: block;
+              padding-top: 1rem;
             }
           }
+        .blog-sidebar a:hover {
+          color: var(--accent-color-2);
+        }
 
       .blog-description {}
         @media (min-width: 768px) and (orientation: landscape) {
@@ -122,13 +142,15 @@
           }
         }
 
-      .post-area {}
+      .post-area {
+        padding-bottom: 2rem;
+      }
         @media (min-width: 768px) and (orientation: landscape) {
           .post-area {
             width: 100%;
             padding-left: var(--sidebar-width);
             grid-template-columns: repeat(auto-fill, minmax(var(--post-width), 1fr));
-            grid-gap: 1rem;
+            grid-gap: 2rem;
           }
         }
 
@@ -137,6 +159,29 @@
           .post {
           }
         }
+        .post h2 {
+          font-family: var(--font-face-mono-alt);
+          font-size: 1.25rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-top: 1rem;
+        }
+        .post p {
+          margin: 0.8rem 0;
+          line-height: 1.5;
+        }
+        .post-meta {
+          text-transform: uppercase;
+        }
+          .post-meta a {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--accent-color-1);
+          }
+          .post-meta a:hover {
+            color: var(--accent-color-2);
+          }
 
     </style>
 
@@ -145,7 +190,7 @@
   <body>
 
     <nav class="blog-sidebar">
-      <h1 class="blog-title">BLOG TITLE</h1>
+      <h1 class="blog-title">The consumption diary of</h1>
       <a href="">link 1</a>
       <a href="">link 2</a>
       <a href="">link 3</a>
