@@ -20,6 +20,9 @@
       <meta name="color:Text" content="#000000">
       <meta name="color:Accent One" content="#000000">
       <meta name="color:Accent Two" content="{AccentColor}">
+      <meta name="if:Post Grid Show Title" content="1"/>
+      <meta name="if:Post Grid Show Caption" content="1"/>
+      <meta name="if:Post Grid Show Tags" content="1"/>
       <meta name="if:Random Link" content="0"/>    
       <meta name="if:Archive Link" content="0"/>    
       <meta name="if:RSS Link" content="0"/> 
@@ -284,11 +287,11 @@
               <a href="{Permalink}" data-id="{PostID}">
             {/block:IndexPage}
               <img src="{block:IfHighQualityImages}{PhotoURL-HighRes}{/block:IfHighQualityImages}{block:IfNotHighQualityImages}{PhotoURL-500}{/block:IfNotHighQualityImages}" data-img-hq="{PhotoURL-HighRes}" alt="{PhotoAlt}" />
-              {block:IndexPage}
+              {block:IfPostGridShowTitle}{block:IndexPage}
                 {block:Title}
                   <h2 class="post-title"><a href="{Permalink}" data-id="{PostID}">{Title}</a></h2>
                 {/block:Title}
-              {/block:IndexPage}
+              {/block:IndexPage}{/block:IfPostGridShowTitle}
               {block:PermalinkPage}
                 {block:Title}<h2 class="post-title">{Title}</h2>{/block:Title}
               {/block:PermalinkPage}
@@ -298,15 +301,21 @@
             {block:IndexPage}
               </a>
             {/block:IndexPage}
-            
-            {block:Caption}{Caption}{/block:Caption}
-            
+
+            {block:IfPostGridShowCaption}{block:IndexPage}
+              {block:Caption}{Caption}{/block:Caption}
+            {/block:IndexPage}{/block:IfPostGridShowCaption}
+            {block:PermalinkPage}
+              {block:Caption}{Caption}{/block:Caption}
+            {/block:PermalinkPage}
+
             {block:NotReblog}
               {Body}
             {/block:NotReblog}
           </article>
 
           <aside class="post-meta">
+            {block:IfPostGridShowTags}{block:IndexPage}
             {block:HasTags}
               {block:Tags}
                 <li>
@@ -314,8 +323,16 @@
                 </li>
               {/block:Tags}
             {/block:HasTags}
+            {/block:IndexPage}{/block:IfPostGridShowTags}
             
             {block:PermalinkPage}
+            {block:HasTags}
+              {block:Tags}
+                <li>
+                  <a href="{TagURL}">#{Tag}</a>
+                </li>
+              {/block:Tags}
+            {/block:HasTags}
               <li class="post-note-count"><a href="{Permalink}" data-id="{PostID}" class="meta-notes">
                 {NoteCount} Notes
               </a></li>
