@@ -106,6 +106,7 @@
       img {
         max-width: 100%;
         vertical-align: middle;
+        transition: 200ms;
       }
 
       figure > img {
@@ -160,6 +161,8 @@
           padding-right: 1rem;
           text-decoration: none;
           color: var(--accent-color-1);
+          transition: 200ms;
+
         }
           @media (min-width: 768px) and (orientation: landscape) {
             .blog-sidebar a {
@@ -169,6 +172,7 @@
           }
         .blog-sidebar a:hover {
           color: var(--accent-color-2);
+          transition: 200ms;
         }
 
       .blog-description {
@@ -222,15 +226,31 @@
           .post-meta a {
             text-decoration: none;
             color: var(--accent-color-1);
+            transition: 200ms;
           }
           .post-meta a:hover {
             color: var(--accent-color-2);
+            transition: 200ms;
           }
+
+          .permalink-page h2 {
+            font-size: 1.75rem;
+            padding: 1.5rem 0;
+          }
+          .permalink-page .post-meta {
+            padding: 1.5rem 0;
+          }
+
+          a img:hover {
+            opacity: 0.7;
+            transition: 200ms;
+          }
+
       .read_more_container {
         display: none;
       }
 
-      /* Display */
+      /* Display, Type */
 
       .circle {
         clip-path: circle(38% at center);
@@ -281,8 +301,8 @@
     <div class="post-area {block:IndexPage}grid{/block:IndexPage}">
 
       {block:Posts}
-        <section class="post {block:IndexPage}grid-child{/block:IndexPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="photo">
-          <article class="post-body">
+        <section class="post{block:IndexPage} grid-child{/block:IndexPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="photo">
+          <article class="post-body{block:PermalinkPage} permalink-page{/block:PermalinkPage}">
             {block:IndexPage}
               <a href="{Permalink}" data-id="{PostID}">
             {/block:IndexPage}
@@ -332,10 +352,10 @@
                   <a href="{TagURL}">#{Tag}</a>
                 </li>
               {/block:Tags}
-            {/block:HasTags}
               <li class="post-note-count"><a href="{Permalink}" data-id="{PostID}" class="meta-notes">
                 {NoteCount} Notes
               </a></li>
+            {/block:HasTags}
             {/block:PermalinkPage}
           </aside>
 
